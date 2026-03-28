@@ -9,6 +9,7 @@
 
     boot.loader.timeout = 8;
     boot.loader.efi.canTouchEfiVariables = true;
+    boot.supportedFilesystems = [ "ntfs" ];
   };
 
   lepton.boot.provides = {
@@ -23,14 +24,16 @@
       };
     };
 
-    greeter.nixos = { host, user, ...}: {
-      imports = [ inputs.sysc-greet.nixosModules.default ];
-      services.sysc-greet = {
-        enable = true;
-        compositor = host.compositor;
-        settings.initial_session = {
-          command = host.compositor;
-          user = user.userName;
+    greeter = { host, user, ...}: {
+      nixos = {
+        imports = [ inputs.sysc-greet.nixosModules.default ];
+        services.sysc-greet = {
+          enable = true;
+          compositor = host.compositor;
+          settings.initial_session = {
+            command = host.compositor;
+            user = user.userName;
+          };
         };
       };
     };

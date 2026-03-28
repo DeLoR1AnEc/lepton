@@ -14,8 +14,6 @@ in
   };
   den.aspects.${name} = {
     includes = [
-      <lepton/systems/base>
-
       <lepton/preservation/system>
       <lepton/preservation/user>
     ];
@@ -34,7 +32,7 @@ in
         hardware.facter.reportPath = ./facter.json;
 
         fileSystems."/persistent".neededForBoot = true;
-        fileSystems."/var/log".neededForBoot = true;
+        fileSystems."/log".neededForBoot = true;
       };
   };
 }
