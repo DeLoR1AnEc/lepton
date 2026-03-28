@@ -8,7 +8,7 @@
     };
 
     boot.loader.timeout = 8;
-    boot.loader.efi.canTouchEfiVars = true;
+    boot.loader.efi.canTouchEfiVariables = true;
   };
 
   lepton.boot.provides = {
