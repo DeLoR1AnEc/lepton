@@ -2,10 +2,6 @@
 {
   _module.args.__findFile = den.lib.__findFile;
 
-  den.schema.user = { user, lib, ... }: {
-    config.classes = lib.mkDefault [ "homeManager" ];
-  };
-
   systems = [ "x86_64-linux" ];
   imports = [
     inputs.den.flakeModule
@@ -25,14 +21,7 @@
           <lepton/zram>
         ];
 
-        homeManager = {
-          programs.home-manager.enable = true;
-          home = {
-            sessionPath = [ "$HOME/.local/bin" ];
-            sessionVariables.NIXPKGS_ALLOW_UNFREE = "1";
-            stateVersion = "22.05";
-          };
-        };
+        nixos.system.stateVersion = "22.05";
       };
     })
   ];
