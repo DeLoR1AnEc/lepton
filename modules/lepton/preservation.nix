@@ -1,6 +1,6 @@
 { inputs, ... }:
 {
-  lepton.preservation.provides = {
+  lepton.preservation._ = {
     system.nixos = {
       imports = [ inputs.preservation.nixosModules.default ];
 
@@ -29,15 +29,17 @@
       };
     };
 
-    user = { host, user, ... }: {
-      nixos = {
-        systemd.tmpfiles.settings.preservation =
-        let
-          permission = {
-              user = user.userName;
-              group = "users";
-              mode = "0755";
-            };
+    user =
+      { host, user, ... }:
+      {
+        nixos = {
+          systemd.tmpfiles.settings.preservation =
+          let
+            permission = {
+                user = user.userName;
+                group = "users";
+                mode = "0755";
+              };
           in
           {
             "/home/${user.userName}/.config".d = permission;
@@ -48,72 +50,72 @@
             "/home/${user.userName}/.local/state/nix".d = permission;
           };
 
-        nixos.preservation.preserveAt."/persistent".users.${user.userName} = {
-          commonMountOptions = [ "x-gvfs-hide" ];
-          directories = [
-            # XDG
-            "Downloads"
-            "Music"
-            "Pictures"
-            "Documents"
-            "Videos"
+          preservation.preserveAt."/persistent".users.${user.userName} = {
+            commonMountOptions = [ "x-gvfs-hide" ];
+            directories = [
+              # XDG
+              "Downloads"
+              "Music"
+              "Pictures"
+              "Documents"
+              "Videos"
 
-            # nix / home-manager
-            ".local/state/home-manager"
-            ".local/state/nix/profiles"
-            ".local/share/nix"
-            ".cache/nix"
-            ".cache.nixpkgs-review"
+              # Nix / Home manager
+              ".local/state/home-manager"
+              ".local/state/nix/"
+              ".local/share/nix"
+              ".cache/nix"
+              ".cache.nixpkgs-review"
 
-            # shell
-            ".local/share/nushell"
+              # Shell
+              ".local/share/nushell"
 
-            # security
-            { directory = ".shh";   mode = "0700"; }
-            { directory = ".gnupg"; mode = "0700"; }
-            { directory = ".pki";   mode = "0700"; }
-            ".local/share/password-store"
+              # Security
+              { directory = ".shh";   mode = "0700"; }
+              { directory = ".gnupg"; mode = "0700"; }
+              { directory = ".pki";   mode = "0700"; }
+              ".local/share/password-store"
 
-            # gaming / media
-            ".local/share/PrismLauncher"
-            ".steam"
-            ".local/share/Steam"
-            ".config/lutris"
-            ".local/share/lutris"
+              # Gaming / Media
+              ".local/share/PrismLauncher"
+              ".steam"
+              ".local/share/Steam"
+              ".config/lutris"
+              ".local/share/lutris"
 
-            ".config/obs-studio"
+              ".config/obs-studio"
 
-            ".local/share/krita"
+              ".local/share/krita"
 
-            # browsers
-            ".mozilla"
+              # Browsers
+              ".mozilla"
 
-            # editors
-            ".local/share/nvim"
-            ".local/state/nvim"
-            ".config/zed"
-            ".local/share/zed"
+              # Editors
+              ".local/share/nvim"
+              ".local/state/nvim"
+              ".config/zed"
+              ".local/share/zed"
 
-            # cli
-            ".local/share/atuin"
-            ".local/share/zoxide"
-            ".cache/tealdeer"
+              # Cli
+              ".local/share/atuin"
+              ".local/share/zoxide"
+              ".cache/tealdeer"
 
-            # misc
-            ".local/share/keyrings"
-            ".config/pulse"
-            ".local/state/wireplumber"
+              # Misc
+              ".local/share/keyrings"
+              ".config/pulse"
+              ".local/state/wireplumber"
 
-            # language package managers
-            ".npn"
-            "go"
-            ".cargo"
-            ".gradle"
-            ".local/pipx"
-            ".local/bin"
-          ];
+              # Language Package Managers
+              ".npn"
+              "go"
+              ".cargo"
+              ".gradle"
+              ".local/pipx"
+              ".local/bin"
+            ];
+          };
         };
       };
-    };
   };
 }

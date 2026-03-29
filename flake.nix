@@ -17,6 +17,7 @@
     nur = {
       url = "github:nix-community/NUR";
       inputs.nixpkgs.follows = "nixpkgs";
+      inputs.flake-parts.follows = "flake-parts";
     };
 
     # Home manager
@@ -29,6 +30,7 @@
     lanzaboote = {
       url = "github:nix-community/lanzaboote";
       inputs.nixpkgs.follows = "nixpkgs";
+      inputs.pre-commit.inputs.flake-compat.follows = "nix-alien/flake-compat";
     };
 
     disko = {
@@ -44,9 +46,24 @@
     };
 
     # Misc
-    wrapper-manager.url = "github:viperML/wrapper-manager";
-
     nixos-hardware.url = "github:nixos/nixos-hardware";
+
+    wrapper-manager.url = "github:viperML/wrapper-manager";
+    nix-index-database = {
+      url = "github:nix-community/nix-index-database";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    nix-alien = {
+      url = "github:thiagokokada/nix-aline";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nix-index-database = "nix-index-database";
+    };
+
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     # Desktop
     niri = {
@@ -68,10 +85,18 @@
       url = "github:tinted-theming/schemes";
       flake = false;
     };
+  };
 
-    nix-colors = {
-      url = "github:misterio77/nix-colors";
-      inputs.base16-schemes.follows = "schemes";
-    };
+  nixConfig = {
+    extra-substituters = [
+      "https://chaotic-nyx.cachix.org/"
+      "https://nix-community.cachix.org"
+      "https://nix-gaming.cachix.org"
+    ];
+    extra-trusted-public-keys = [
+      "chaotic-nyx.cachix.org-1:HfnXSw4pj95iI/n17rIDy40agHj12WfF+Gqk6SonIT8="
+      "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+      "nix-gaming.cachix.org-1:nbjlureqMbRAxR1gJ/f3hxemL9svXaZF/Ees8vCUUs4="
+    ];
   };
 }

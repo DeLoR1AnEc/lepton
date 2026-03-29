@@ -9,13 +9,14 @@ let
 in
 {
   den.hosts.x86_64-linux.${name} = {
-    inherit compositor;
     users.delorianec = {};
   };
   den.aspects.${name} = {
     includes = [
       <lepton/preservation/system>
       <lepton/preservation/user>
+
+      <lepton/presets/desktop>
     ];
 
     nixos =

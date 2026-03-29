@@ -10,18 +10,23 @@
     ({ __findFile, ... }: {
       den.default = {
         includes = [
-          # den
+          # --- Den ---
           <den/define-user>
 
-          # lepton
+          # --- Boot ---
           <lepton/boot>
-          <lepton/boot/secure>
-          <lepton/boot/greeter>
+          # <lepton/secure>
+          # <lepton/greeter>
 
+          # --- Zram ---
           <lepton/zram>
-        ];
 
-        nixos.system.stateVersion = "22.05";
+          # --- Misc ---
+          <lepton/networking>
+          # <lepton/networking/ssh>
+          <lepton/localization>
+          # <lepton/localization/fonts>
+        ];
       };
     })
   ];
