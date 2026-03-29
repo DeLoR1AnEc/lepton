@@ -5,7 +5,6 @@
 }:
 let
   name = "tau";
-  compositor = "niri";
 in
 {
   den.hosts.x86_64-linux.${name} = {
@@ -17,6 +16,7 @@ in
       <lepton/preservation/user>
 
       <lepton/presets/desktop>
+      <lepton/compositor/niri>
     ];
 
     nixos =
