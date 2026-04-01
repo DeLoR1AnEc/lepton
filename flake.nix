@@ -57,7 +57,7 @@
     nix-alien = {
       url = "github:thiagokokada/nix-aline";
       inputs.nixpkgs.follows = "nixpkgs";
-      inputs.nix-index-database = "nix-index-database";
+      inputs.nix-index-database.follows = "nix-index-database";
     };
 
     sops-nix = {
