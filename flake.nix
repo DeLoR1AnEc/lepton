@@ -55,7 +55,7 @@
     };
 
     nix-alien = {
-      url = "github:thiagokokada/nix-aline";
+      url = "github:thiagokokada/nix-alien";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.nix-index-database.follows = "nix-index-database";
     };
