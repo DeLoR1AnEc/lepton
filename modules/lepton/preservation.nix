@@ -9,6 +9,8 @@
 
       systemd.suppressedSystemUnits = [ "systemd-machine-id-commit.service" ];
 
+      fileSystems."/persistent".neededForBoot = true;
+
       preservation.preserveAt."/persistent" = {
         directories = [
           "/etc/ssh"
@@ -16,6 +18,7 @@
           "/etc/secureboot"
           "/etc/nix/inputs"
 
+          "/var/log"
           "/var/lib/nixos"
           "/var/lib/systemd"
           { directory = "/var/lib/private"; mode = "0700"; }
@@ -25,6 +28,7 @@
         ];
         files = [
           { file = "/etc/machine-id"; inInitrd = true; }
+          { file = "/var/lib/sops-age-key"; inInitrd = true; }
         ];
       };
     };
@@ -53,6 +57,9 @@
           preservation.preserveAt."/persistent".users.${user.userName} = {
             commonMountOptions = [ "x-gvfs-hide" ];
             directories = [
+              # Config
+              "nix-config"
+
               # XDG
               "Downloads"
               "Music"
@@ -65,13 +72,13 @@
               ".local/state/nix/"
               ".local/share/nix"
               ".cache/nix"
-              ".cache.nixpkgs-review"
+              ".cache/nixpkgs-review"
 
               # Shell
               ".local/share/nushell"
 
               # Security
-              { directory = ".shh";   mode = "0700"; }
+              { directory = ".ssh";   mode = "0700"; }
               { directory = ".gnupg"; mode = "0700"; }
               { directory = ".pki";   mode = "0700"; }
               ".local/share/password-store"
@@ -107,7 +114,7 @@
               ".local/state/wireplumber"
 
               # Language Package Managers
-              ".npn"
+              ".npm"
               "go"
               ".cargo"
               ".gradle"

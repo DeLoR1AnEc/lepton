@@ -17,7 +17,7 @@
         };
 
         windows = {
-          size = "400G";
+          size = "200G";
           type = "0700";
           content = {
             type = "filesystem";
@@ -26,7 +26,7 @@
         };
 
         games = {
-          size = "600GB";
+          size = "800G";
           content = {
             type = "filesystem";
             format = "btrfs";
@@ -39,42 +39,38 @@
         linux = {
           size = "100%";
           content = {
-            type = "luks";
-            name = "cryptroot";
-            settings.allowDiscards = true;
-            content = {
-              type = "btrfs";
-              extraArgs = [ "-f" "-L" "NIXROOT" ];
-              subvolumes = {
-                "/root" = {
-                  mountpoint = "/";
-                  mountOptions = [ "compress=zstd" "noatime" "subvol=root" ];
-                };
-                "/nix" = {
-                  mountpoint = "/nix";
-                  mountOptions = [ "compress=zstd" "noatime" "subvol=nix" ];
-                };
-                "/persistent" = {
-                  mountpoint = "/persistent";
-                  mountOptions = [ "compress=zstd" "noatime" "subvol=persistent" ];
-                };
-                "/home" = {
-                  mountpoint = "/home";
-                  mountOptions = [ "compress=zstd" "noatime" "subvol=home" ];
-                };
-                "/log" = {
-                  mountpoint = "/log";
-                  mountOptions = [ "compress=zstd" "noatime" "subvol=log" ];
-                };
-                "/snapshots" = {
-                  mountpoint = "/snapshots";
-                  mountOptions = [ "compress=zstd" "noatime" "subvol=snapshots" ];
-                };
+            type = "btrfs";
+            extraArgs = [ "-f" "-L" "NIXROOT" ];
+            subvolumes = {
+              "/nix" = {
+                mountpoint = "/nix";
+                mountOptions = [ "compress=zstd" "noatime" "subvol=nix" ];
+              };
+              "/persistent" = {
+                mountpoint = "/persistent";
+                mountOptions = [ "compress=zstd" "noatime" "subvol=persistent" ];
+              };
+              "/home" = {
+                mountpoint = "/home";
+                mountOptions = [ "compress=zstd" "noatime" "subvol=home" ];
+              };
+              "/log" = {
+                mountpoint = "/log";
+                mountOptions = [ "compress=zstd" "noatime" "subvol=log" ];
+              };
+              "/snapshots" = {
+                mountpoint = "/snapshots";
+                mountOptions = [ "compress=zstd" "noatime" "subvol=snapshots" ];
               };
             };
           };
         };
       };
     };
+  };
+
+  disko.devices.nodev."/" = {
+    fsType = "tmpfs";
+    mountOptions = [ "relatime" "mode=755" "size=2G" ];
   };
 }
