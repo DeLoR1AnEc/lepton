@@ -9,7 +9,6 @@ default:
 [group('nix')]
 [linux]
 switch mode="default":
-    #!/usr/bin/env nu
     use {{ utils_nu }} *;
     nixos-switch (hostname) {{ mode }}
 
@@ -17,7 +16,6 @@ switch mode="default":
 [group('nix')]
 [linux]
 switch-host name mode="default":
-    #!/usr/bin/env nu
     use {{ utils_nu }} *;
     nixos-switch {{ name }} {{ mode }}
 
@@ -27,36 +25,32 @@ switch-host name mode="default":
 [group('nix')]
 [linux]
 build-image:
-    #!/usr/bin/env nu
     nix build .#nixosConfigurations.lepton-installer.config.system.build.image
 
 # Flash the installer image to drive
 [group('nix')]
 [linux]
 flash-image drive:
-    sudo umount /dev/{{ drive }}* || true
-    dd if=result/iso/lepton-installer.iso of=/dev/{{ drive }} bs=4M status=progress conv=fsync
+    try { umount /dev/{{ drive }}* }
+    dd if=result/iso/lepton-installer.iso of=/dev/{{ drive }} bs=4M status=progress
     sync
 
 # Install a host (run from installer)
 [group('nix')]
 [linux]
 install-lepton:
-    #!/usr/bin/env nu
     nu modules/hosts/lepton-installer/installer.nu
 
 # Test installer locally without flashing ISO
 [group('nix')]
 [linux]
 test-installer:
-    #!/usr/bin/env nu
     nu modules/hosts/lepton-installer/installer.nu --dry-run
 
 # Generate facter.json for a host (run from installer)
 [group('nix')]
 [linux]
 facter name:
-    #!/usr/bin/env nu
     use {{ utils_nu }} *;
     gen-facter {{ name }}
 

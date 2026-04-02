@@ -37,7 +37,6 @@ in
             jq
             git
             parted
-            lshw
             pciutils
             btrfs-progs
           ];
@@ -45,12 +44,10 @@ in
           # ── Auto-login + hint ─────────────────────────────────────────────────
           services.getty.autologinUser = lib.mkForce "root";
           environment.variables.JUST_JUSTFILE = "/etc/lepton/Justfile";
-          environment.loginShellInit = ''
-            if [ "$(tty)" = "/dev/tty1" ]; then
-              echo ""
-              echo "  Run: just install-lepton"
-              echo ""
-            fi
+          environment.etc."motd".text = ''
+            echo " =========================="
+            echo "  Run: just install-lepton "
+            echo " =========================="
           '';
 
           image.baseName = lib.mkForce "${name}";
