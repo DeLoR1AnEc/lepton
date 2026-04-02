@@ -7,7 +7,7 @@
       consoleMode = "max";
     };
 
-    boot.loader.timeout = 8;
+    boot.loader.timeout = lib.mkDefault 8;
     boot.loader.efi.canTouchEfiVariables = true;
     boot.supportedFilesystems = [ "ntfs" ];
   };
