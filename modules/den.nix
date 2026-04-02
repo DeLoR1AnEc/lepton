@@ -14,8 +14,8 @@
 
           # --- Boot ---
           <lepton/boot>
-          # <lepton/secure>
-          <lepton/greeter>
+          # <lepton/boot/secure>
+          <lepton/boot/greeter>
 
           <lepton/zram>
 
