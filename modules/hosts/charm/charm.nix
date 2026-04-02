@@ -8,6 +8,7 @@ let
 in
 {
   den.hosts.x86_64-linux.${name} = {
+
     users.delorianec = {};
   };
 
@@ -28,7 +29,6 @@ in
         ];
 
         # VM specific
-        virtualisation.qemu.options = [ "-vga virtio" ];
         services.qemuGuest.enable = true;
       };
   };

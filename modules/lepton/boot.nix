@@ -25,15 +25,15 @@
     };
 
     greeter =
-      { host, user, ...}:
+      { user, ...}:
       {
         nixos = {
           imports = [ inputs.sysc-greet.nixosModules.default ];
           services.sysc-greet = {
             enable = true;
-            compositor = host.compositor;
+            compositor = "niri";
             settings.initial_session = {
-              command = host.compositor;
+              command = "niri";
               user = user.userName;
             };
           };
