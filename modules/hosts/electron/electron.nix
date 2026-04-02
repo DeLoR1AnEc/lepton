@@ -31,7 +31,7 @@ in
           ./_disko.nix
         ];
 
-        # hardware.facter.reportPath = ./facter.json;
+        hardware.facter.reportPath = ./facter.json;
 
         fileSystems."/log".neededForBoot = true;
       };

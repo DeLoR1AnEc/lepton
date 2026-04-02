@@ -13,7 +13,7 @@
 
       preservation.preserveAt."/persistent" = {
         directories = [
-          /lepton
+          "/lepton"
 
           "/etc/ssh"
           "/etc/NetworkManager/system-connections"
