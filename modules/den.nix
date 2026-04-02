@@ -26,6 +26,7 @@
 
           # --- Apps ---
           <lepton/apps/core>
+          <lepton/apps/shells>
         ];
       };
     })
