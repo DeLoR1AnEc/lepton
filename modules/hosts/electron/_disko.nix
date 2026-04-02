@@ -1,12 +1,12 @@
 {
  disko.devices.disk.main = {
     type = "disk";
-    device = "/dev/vda";
+    device = "/dev/sda";
     content = {
       type = "gpt";
       partitions = {
         ESP = {
-          size = "512M";
+          size = "1G";
           type = "EF00";
           content = {
             type = "filesystem";

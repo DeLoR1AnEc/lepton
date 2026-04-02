@@ -4,16 +4,17 @@
   ...
 }:
 let
-  name = "charm";
+  name = "electron";
 in
 {
   den.hosts.x86_64-linux.${name} = {
-
     users.delorianec = {};
   };
 
   den.aspects.${name} = {
     includes = [
+      <lepton/boot/secure>
+
       <lepton/preservation/system>
       <lepton/preservation/user>
 
@@ -24,12 +25,15 @@ in
     nixos =
       {
         imports = [
+          inputs.nixos-hardware.nixosModules.lenovo-thinkpad-t480
+
           inputs.disko.nixosModules.default
           ./_disko.nix
         ];
 
-        # VM specific
-        services.qemuGuest.enable = true;
+        # hardware.facter.reportPath = ./facter.json;
+
+        fileSystems."/log".neededForBoot = true;
       };
   };
 }
