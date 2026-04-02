@@ -30,7 +30,7 @@
 
       # Misc
       settings = {
-        exerimental-features = [
+        experimental-features = [
           "nix-command"
           "flakes"
         ];
