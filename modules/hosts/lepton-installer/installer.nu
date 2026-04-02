@@ -85,7 +85,16 @@ def main [--dry-run] {
     print $"[dry-run] would run: nixos-install --flake ($flake)#($host)"
     print $"[dry-run] would run: cp -r ($flake) /mnt/persistent/lepton-flake"
   } else {
-    nixos-install $host $disk
+    print $"Installing '($host)'..."
+
+    print "Running disko..."
+    sudo nix run github:nix-community/disko -- --mode disko --flake $"($FLAKE)#($host)" --disk main $disk
+
+    print "Running nixos-install..."
+    sudo nixos-install --flake $"($FLAKE)#($host)" --no-root-passwd
+
+    print "Copying flake to target..."
+    sudo cp -r $FLAKE /mnt/persistent/lepton
   }
 
   print ""

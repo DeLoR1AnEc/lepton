@@ -28,7 +28,7 @@ switch-host name mode="default":
 [linux]
 build-image:
     #!/usr/bin/env nu
-    nix build .#flake.nixosConfigurations.installer.config.system.build.image
+    nix build .#nixosConfigurations.lepton-installer.config.system.build.image
 
 # Flash the installer image to drive
 [group('nix')]
