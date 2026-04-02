@@ -1,13 +1,15 @@
 {
   description = "Delorianec's NixOS config";
 
-  outputs = inputs: inputs.flake-parts.lib.mkFlake
-    { inherit inputs;} (inputs.import-tree ./modules);
+  outputs = inputs:
+    (inputs.nixpkgs.lib.evalModules {
+      specialArgs.inputs = inputs;
+      modules = [ (inputs.import-tree ./modules) ];
+    }).config.flake;
 
   inputs = {
     # Dendritic stuff
     den.url = "github:vic/den";
-    flake-parts.url = "github:hercules-ci/flake-parts";
     import-tree.url = "github:vic/import-tree";
     flake-aspects.url = "github:vic/flake-aspects";
 
@@ -17,7 +19,6 @@
     nur = {
       url = "github:nix-community/NUR";
       inputs.nixpkgs.follows = "nixpkgs";
-      inputs.flake-parts.follows = "flake-parts";
     };
 
     # Home manager

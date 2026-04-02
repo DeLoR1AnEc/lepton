@@ -1,8 +1,5 @@
 {
-  den.schema.user =
-    { user, lib, ... }: {
-      config.classes = lib.mkDefault [ "homeManager" ];
-    };
+  den.schema.user.classes = [ "homeManager" ];
 
   den.default = {
     nixos.home-manager = {

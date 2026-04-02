@@ -1,22 +1,20 @@
 {
   lepton.localization = {
-    nixos = {
-      time.timeZone = "Europe/Warsaw";
-
-      i18n.extraLocales = [ "all" ];
-      i18n.defaultLocale = "en_US.UTF-8";
-      i18n.extraLocaleSettings = {
-        LC_TIME = "en_GB.UTF-8";
-        LC_COLLATE = "C";
-        LC_PAPER = "pl_PL.UTF-8";
-        LC_MEASUREMENT = "de_DE.UTF-8";
-      };
-    };
-
-    _.fonts =
-      { pkgs, ... }:
+    nixos =
+      { pkgs, ...}:
       {
-        nixos.fonts.packages = with pkgs; [
+        time.timeZone = "Europe/Warsaw";
+
+        i18n.extraLocales = [ "all" ];
+        i18n.defaultLocale = "en_US.UTF-8";
+        i18n.extraLocaleSettings = {
+          LC_TIME = "en_GB.UTF-8";
+          LC_COLLATE = "C";
+          LC_PAPER = "pl_PL.UTF-8";
+          LC_MEASUREMENT = "de_DE.UTF-8";
+        };
+
+        fonts.packages = with pkgs; [
           # icons
           material-design-icons
           font-awesome
@@ -39,5 +37,5 @@
           maple-mono.NF-CN-unhinted
         ];
       };
-  };
+    };
 }
