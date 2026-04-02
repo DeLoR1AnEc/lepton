@@ -4,12 +4,12 @@
 ## Installation
 1. Build the installer image
 ```bash
-nix build .#flake.nixosConfigurations.installer.config.system.build.image
+just build-image
 ```
 
 2. Flash it to an USB-Drive
 ```bash
-dd if=result/iso/lepton-installer.iso of=/dev/sdX bs=4M status=progress && sync
+just flash-image
 ```
 
 3. Run the installer on the end machine

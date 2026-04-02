@@ -21,6 +21,21 @@ switch-host name mode="default":
     use {{ utils_nu }} *;
     nixos-switch {{ name }} {{ mode }}
 
+# ==== Installing ====
+
+# Build the installer image
+[group('nix')]
+[linux]
+build-image:
+    #!/usr/bin/env nu
+    nix build .#flake.nixosConfigurations.installer.config.system.build.image
+
+# Flash the installer image to drive
+[group('nix')]
+[linux]
+flash-image drive:
+    dd if=result/iso/lepton-installer.iso of=/dev/{{ drive }} bs=4M status=progress && sync
+
 # Install a host (run from installer)
 [group('nix')]
 [linux]
@@ -42,6 +57,8 @@ facter name:
     #!/usr/bin/env nu
     use {{ utils_nu }} *;
     gen-facter {{ name }}
+
+# ==== Misc ====
 
 # Update flake inputs
 [group('nix')]
