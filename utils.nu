@@ -7,9 +7,9 @@ export def nixos-switch [
   print $"nixos-switch '($name)' in '($mode)' mode..."
   print (repeat-str "=" 50)
   if $mode == "debug" {
-    nixos-rebuild switch --sudo --flake $".#flake.nixosConfigurations.($name)" --show-trace --verbose
+    nixos-rebuild switch --sudo --flake $".#($name)" --show-trace --verbose
   } else {
-    nixos-rebuild switch --sudo --flake $".#flake.nixosConfigurations.($name)"
+    nixos-rebuild switch --sudo --flake $".#($name)"
   }
 }
 
@@ -20,13 +20,13 @@ export def nixos-install [
   print $"Installing '($name)'..."
 
   print "Running disko..."
-  sudo nix run github:nix-community/disko -- --mode disko --flake $".#flake.nixosConfiguration.($name)" --disk main $disk
+  sudo nix run github:nix-community/disko -- --mode disko --flake $".#($name)" --disk main $disk
 
   print "Running nixos-install..."
-  sudo nixos-install --flake $".#flake.nixosConfigurations.($name)" --no-root-passwd
+  sudo nixos-install --flake $".#($name)" --no-root-passwd
 
   print "Copying flake to target..."
-  sudo cp -r $env.PWD /mnt/persistent/lepton-flake
+  sudo cp -r $env.PWD /mnt/persistent/lepton
 }
 
 export def gen-facter [name: string] {

@@ -24,10 +24,16 @@ switch-host name mode="default":
 # Install a host (run from installer)
 [group('nix')]
 [linux]
-install name disk:
+install-lepton:
     #!/usr/bin/env nu
-    use {{ utils_nu }} *;
-    nixos-install {{ name }} {{ disk }}
+    nu modules/hosts/lepton-installer/installer.nu
+
+# Test installer locally without flashing ISO
+[group('nix')]
+[linux]
+test-installer:
+    #!/usr/bin/env nu
+    nu modules/hosts/lepton-installer/installer.nu --dry-run
 
 # Generate facter.json for a host (run from installer)
 [group('nix')]

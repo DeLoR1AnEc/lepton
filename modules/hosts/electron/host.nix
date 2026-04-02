@@ -13,6 +13,10 @@ in
 
   den.aspects.${name} = {
     includes = [
+      # Preset
+      <lepton/presets/desktop>
+
+      # Host Specific
       <lepton/boot/secure>
 
       <lepton/preservation/system>

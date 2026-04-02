@@ -1,10 +1,11 @@
+{ inputs, ... }:
 {
-  den.schema.user.classes = [ "homeManager" ];
-
-  den.default = {
+  lepton.home = {
     nixos =
       { pkgs, ... }:
       {
+        imports = [ inputs.home-manager.nixosModules.default ];
+
         home-manager = {
           useUserPackages = true;
           useGlobalPkgs = true;

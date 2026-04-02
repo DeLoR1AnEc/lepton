@@ -2,17 +2,17 @@
 ![STANDART_MODEL](assets/standart_model.png)
 
 ## Installation
-Build the installer image
+1. Build the installer image
 ```bash
-nix build .#flake.nixosConfigurations.installer.config.system.build.isoImage
+nix build .#flake.nixosConfigurations.installer.config.system.build.image
 ```
 
-Flash it
+2. Flash it to an USB-Drive
 ```bash
-dd if=result/iso/*.iso of=/dev/sdX bs=4M status=progress && sync
+dd if=result/iso/lepton-installer.iso of=/dev/sdX bs=4M status=progress && sync
 ```
 
-Run the installer
+3. Run the installer on the end machine
 ```bash
-lepton-install
+just install-lepton
 ```

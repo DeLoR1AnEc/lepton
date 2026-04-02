@@ -3,6 +3,7 @@
   lepton.networking = {
     nixos = {
       networking = {
+        networkmanager.enable = true;
         nftables.enable = true;
         wireguard.enable = true;
         firewall.enable = lib.mkDefault false;
