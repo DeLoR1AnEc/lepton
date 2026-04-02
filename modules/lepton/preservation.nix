@@ -13,6 +13,8 @@
 
       preservation.preserveAt."/persistent" = {
         directories = [
+          /lepton
+
           "/etc/ssh"
           "/etc/NetworkManager/system-connections"
           "/etc/secureboot"
@@ -57,9 +59,6 @@
           preservation.preserveAt."/persistent".users.${user.userName} = {
             commonMountOptions = [ "x-gvfs-hide" ];
             directories = [
-              # Config
-              "nix-config"
-
               # XDG
               "Downloads"
               "Music"
