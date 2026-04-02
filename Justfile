@@ -34,7 +34,9 @@ build-image:
 [group('nix')]
 [linux]
 flash-image drive:
-    dd if=result/iso/lepton-installer.iso of=/dev/{{ drive }} bs=4M status=progress && sync
+    sudo umount /dev/{{ drive }}* || true
+    dd if=result/iso/lepton-installer.iso of=/dev/{{ drive }} bs=4M status=progress conv=fsync
+    sync
 
 # Install a host (run from installer)
 [group('nix')]

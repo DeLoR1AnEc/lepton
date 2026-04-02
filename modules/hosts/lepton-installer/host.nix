@@ -30,7 +30,7 @@ in
 
           # ── Packages ─────────────────────────────────────────────────────────
           environment.systemPackages = with pkgs; [
-            inputs.disko.packages.${pkgs.system}.disko
+            inputs.disko.packages.${pkgs.stdenv.hostPlatform.system}.disko
             nushell
             just
             gum
