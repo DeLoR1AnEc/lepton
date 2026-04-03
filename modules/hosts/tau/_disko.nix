@@ -58,6 +58,10 @@
                 mountpoint = "/log";
                 mountOptions = [ "compress=zstd" "noatime" "subvol=log" ];
               };
+              "/tmp" = {
+                mountpoint = "/tmp";
+                mountOptions = [ "compress=zstd" "noatime" ];
+              };
               "/snapshots" = {
                 mountpoint = "/snapshots";
                 mountOptions = [ "compress=zstd" "noatime" "subvol=snapshots" ];

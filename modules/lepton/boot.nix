@@ -28,7 +28,7 @@
       { user, ...}:
       {
         nixos = {
-          imports = [ inputs.sysc-greet.nixosModules.default ];
+          imports = [ inputs.sysc-greet.nixosModules.sysc-greet ];
           services.sysc-greet = {
             enable = true;
             compositor = "niri";

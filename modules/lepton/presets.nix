@@ -19,7 +19,10 @@
         # --- Misc ---
         <lepton/networking>
         # <lepton/networking/ssh>
+
         <lepton/localization>
+
+        <lepton/secrets>
 
         # --- Apps ---
         <lepton/apps/core>

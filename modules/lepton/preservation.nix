@@ -30,7 +30,7 @@
         ];
         files = [
           { file = "/etc/machine-id"; inInitrd = true; }
-          { file = "/var/lib/sops-age-key"; inInitrd = true; }
+          "/var/lib/sops-age-key"
         ];
       };
     };

@@ -38,14 +38,9 @@ flash-image drive:
 # Install a host (run from installer)
 [group('nix')]
 [linux]
+[no-cd]
 install-lepton:
-    nu modules/hosts/lepton-installer/installer.nu
-
-# Test installer locally without flashing ISO
-[group('nix')]
-[linux]
-test-installer:
-    nu modules/hosts/lepton-installer/installer.nu --dry-run
+    nu /etc/lepton/modules/hosts/lepton-installer/installer.nu
 
 # Generate facter.json for a host (run from installer)
 [group('nix')]
