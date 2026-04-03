@@ -16,8 +16,8 @@
           "/lepton"
 
           "/etc/ssh"
-          "/etc/NetworkManager/system-connections"
           "/etc/secureboot"
+          "/etc/NetworkManager/system-connections"
           "/etc/nix/inputs"
 
           "/var/log"

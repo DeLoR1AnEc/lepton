@@ -40,6 +40,7 @@ in
             gum
             jq
             git
+            sbctl
             parted
             pciutils
             btrfs-progs

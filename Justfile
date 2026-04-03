@@ -71,9 +71,3 @@ upp input:
 gc:
     sudo nix-collect-garbage --delete-older-than 7d
     nix-collect-garbage --delete-older-than 7d
-
-# Enroll secure boot keys
-[group('nix')]
-[linux]
-secureboot:
-    sudo sbctl enroll-keys --microsoft

@@ -1,5 +1,7 @@
 #!/usr/bin/env nu
 
+const FLAKE_PATH = (path self .)
+
 def main [--dry-run] {
   if $dry_run {
     (gum style --foreground 214 "Running in *dry* mode")
@@ -16,7 +18,7 @@ def main [--dry-run] {
     ^cp -rL --no-preserve=mode /etc/lepton /tmp/lepton
   }
 
-  let flake = if $dry_run { (path self .) | path join "../.." | path expand } else { "/tmp/lepton" }
+  let flake = if $dry_run { $FLAKE_PATH | path join "../../.." | path expand } else { "/tmp/lepton" }
 
   # ── Pick a host ────────────────────────────────────────────────────────────
   let hosts_raw = (nix flake show --json --no-write-lock-file $flake | complete)
@@ -55,14 +57,14 @@ def main [--dry-run] {
     ""
   }
 
-  if $needs_disk {
-    (gum style --foreground 212 "Writing disk to config…")
-    if $dry_run {
-      (gum style --foreground 214 $"[dry-run] would run: sed -i \"s|device = \"\";|device = \"($disk)\";|\" ($disko_file)")
-    else {
-      sed -i $"s|device = \"\";|device = \"($disk)\";|" $disko_file
-    }
-  }
+#  if $needs_disk {
+#    (gum style --foreground 212 "Writing disk to config…")
+#    if $dry_run {
+#      (gum style --foreground 214 $"[dry-run] would run: sed -i \"s|device = \"\";|device = \"($disk)\";|\" ($disko_file)")
+#    } else {
+#      sed -i $"s|device = \"\";|device = \"($disk)\";|" $disko_file
+#    }
+#  }
 
   # ── Facter ─────────────────────────────────────────────────────────────────
   let do_facter = try { gum confirm $"Regenerate facter.json for ($host)?"; true } catch { false }
@@ -91,15 +93,48 @@ def main [--dry-run] {
   # ── Install ────────────────────────────────────────────────────────────────
   (gum style --foreground 212 $"Installing ($host) onto ($disk)…")
   if $dry_run {
-    (gum style --foreground 214 $"[dry-run] would run: disko --flake ($flake)#($host) --argstr disk ($disk)")
-    (gum style --foreground 214 $"[dry-run] would run: nixos-install --flake \"($flake)#($host)\" --no-root-passwd")
+    (gum style --foreground 214 $"[dry-run] would run: disko --flake ($flake)#($host)")
+    (gum style --foreground 214 $"[dry-run] would run: sbctl create-keys")
+    (gum style --foreground 214 $"[dry-run] would run: sbctl enroll-keys --microsoft")
+    (gum style --foreground 214 $"[dry-run] would run: SHELL=\"/bin/sh\" nixos-install --flake \"($flake)#($host)\" --no-root-passwd")
     (gum style --foreground 214 $"[dry-run] would run: cp -r ($flake) /mnt/persistent/lepton")
   } else {
-    (gum style --foreground 212 "Running disko…")
-    disko --mode disko --flake $"($flake)#($host)"
+#    (gum style --foreground 212 "Running disko…")
+#    disko --mode disko --flake $"($flake)#($host)"
+#    (gum style --foreground 212 "Generating secure boot keys…")
+#
+#    sbctl create-keys
+#    chattr -i /sys/firmware/efi/efivars/db-* /sys/firmware/efi/efivars/KEK-*
+#    try { sbctl enroll-keys --microsoft }
+#
+#    mkdir /mnt/etc/secureboot/
+#    cp -r /var/lib/sbctl/keys /mnt/etc/secureboot/keys
+#   mkdir /mnt/persistent/etc/secureboot/
+#    cp -r /var/lib/sbctl/keys /mnt/persistent/etc/secureboot/keys
+#
+#    (gum style --foreground 212 "Running nixos-install…")
+#    nixos-install --flake $"($flake)#($host)" --no-root-passwd
+#
+#    (gum style --foreground 212 "Copying flake to target…")
+#    cp -r $flake /mnt/persistent/lepton
+#  }
 
-    (gum style --foreground 212 "Running nixos-install…")
-    nixos-install --flake $"($flake)#($host)" --no-root-passwd
+    (gum style --foreground 212 "Generating secure boot keys…")
+    sbctl create-keys
+    chattr -i /sys/firmware/efi/efivars/db-* /sys/firmware/efi/efivars/KEK-*
+    try { sbctl enroll-keys --microsoft }
+
+    (gum style --foreground 212 "Running disko-install…")
+    (disko-install
+      --mode format
+      --flake $"($flake)#($host)"
+      --write-efi-boot-entries
+      --mount-point "/mnt"
+      --disk main $disk
+      --extra-files "/var/lib/sbctl/keys" "/etc/secureboot/keys")
+
+    mkdir /mnt/persistent/etc/secureboot
+    cp -r /var/lib/sbctl/keys /mnt/persistent/etc/secureboot/keys
 
     (gum style --foreground 212 "Copying flake to target…")
     cp -r $flake /mnt/persistent/lepton
