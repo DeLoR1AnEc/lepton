@@ -13,10 +13,11 @@ in
 
   den.aspects.${name} = {
     includes = [
+      <lepton/presets/desktop>
+
       <lepton/preservation/system>
       <lepton/preservation/user>
 
-      <lepton/presets/desktop>
       <lepton/compositor/niri>
     ];
 

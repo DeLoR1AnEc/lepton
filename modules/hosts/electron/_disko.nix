@@ -1,6 +1,7 @@
 {
- disko.devices.disk.main = {
+  disko.devices.disk.main = {
     type = "disk";
+    device = "";
     content = {
       type = "gpt";
       partitions = {

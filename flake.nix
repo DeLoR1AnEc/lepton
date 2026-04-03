@@ -48,6 +48,7 @@
 
     # Misc
     nixos-hardware.url = "github:nixos/nixos-hardware";
+    nixos-facter.url = "github:nix-community/nixos-facter";
 
     wrapper-manager.url = "github:viperML/wrapper-manager";
     nix-index-database = {

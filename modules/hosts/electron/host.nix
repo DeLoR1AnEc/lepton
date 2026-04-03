@@ -22,7 +22,6 @@ in
       <lepton/preservation/system>
       <lepton/preservation/user>
 
-      <lepton/presets/desktop>
       <lepton/compositor/niri>
     ];
 
